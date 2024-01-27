@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Blog</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #121212;
+            color: #fff;
+        }
+        .header-nav {
+            background-color: #333;
+            padding: 10px 20px;
+            display: flex;
+            align-items: center;
+        }
+        h1, nav {
+            margin: 0;
+        }
+        h1 {
+            flex: 1;
+        }
+        nav {
+            flex: 1;
+            text-align: right;
+        }
+        nav a {
+            color: #fff;
+            text-decoration: none;
+            padding: 5px 10px;
+            margin: 0 5px;
+        }
+        nav a:hover {
+            background-color: #666;
+        }
+        .container {
+            width: 80%;
+            margin: 20px auto;
+            text-align: center;
+        }
+        .post {
+            border-bottom: 1px solid #666;
+            padding: 20px 0;
+        }
+    </style>
+</head>
+<body>
+    <div class="header-nav">
+        <h1>Welcome to My Blog</h1>
+        <nav>
+            <a href="#">Home</a>
+            <a href="#">About</a>
+            <a href="#">Contact</a>
+        </nav>
+    </div>
+    <div class="container">
+        <div class="post">
+            <h2>Post Title 1</h2>
+            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis dapibus nunc sit amet felis ultricies dapibus.</p>
+        </div>
+        <div class="post">
+            <h2>Post Title 2</h2>
+            <p>Nulla facilisi. Phasellus ut tempor tortor, nec lacinia velit. Proin volutpat elit et diam eleifend, in luctus sem dapibus.</p>
+        </div>
+        <div class="post">
+            <h2>Post Title 3</h2>
+            <p>Quisque at ex eget nisl eleifend tincidunt ut et augue. Integer dapibus nulla ut risus aliquam, eget laoreet libero gravida.</p>
+        </div>
+    </div>
+</body>
+</html>
