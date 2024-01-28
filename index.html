@@ -1,1 +1,264 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chloe's Blog</title>
+    <link rel="icon" type="image/png" href="Assets/smile.png">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-image: url("Assets/background.png");
+            background-size: cover;
+            background-repeat: no-repeat;
+            background-attachment: fixed;
+            color: #fff;
+            overflow: hidden;
+        }
+        .header-nav {
+            background-color: rgba(50, 50, 50, 0.7);
+            padding: 10px 20px;
+            display: flex;
+            align-items: center;
+        }
+        h1, nav {
+            margin: 0;
+        }
+        h1 {
+            flex: 1;
+        }
+        nav {
+            flex: 1;
+            text-align: right;
+        }
+        nav a {
+            color: #fff;
+            text-decoration: none;
+            padding: 5px 10px;
+            margin: 0 5px;
+        }
+        nav a:hover {
+            background-color: #666;
+        }
+        .logo img {
+            width: 238px;
+            height: 48px;
+        }
 
+        .scrollable-content {
+            overflow-y: auto;
+            height: calc(100vh - 70px);
+            scrollbar-width: none;
+            -ms-overflow-style: none;
+        }
+        .scrollable-content::-webkit-scrollbar {
+            display: none;
+        }
+
+        .post-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 20px;
+            padding: 20px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        .post {
+            background-color: #333;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 0 10px rgba(255, 255, 255, 0.1);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            grid-column: span var(--xLength);
+            grid-row: span var(--yLength);
+        }
+        .post img {
+            width: 100%;
+            height: 100%;
+            display: block;
+            border-radius: 10px 10px 0 0;
+            object-fit: cover;
+            object-position: center top;
+        }
+        .post-content {
+            padding: 15px;
+            flex: 1;
+            text-align: center;
+        }
+        .post-content h2 {
+            margin-top: 0;
+            color: #fff;
+        }
+        .post-content p {
+            margin-bottom: 0;
+            color: #ccc;
+        }
+        .interaction {
+            padding: 10px;
+            background-color: transparent;
+            text-align: center;
+        }
+        .like-btn {
+            width: 32px;
+            height: 32px;
+            background-repeat: no-repeat;
+            background-size: cover;
+            background-image: url('Assets/like/nolike.png');
+            background-color: transparent;
+            border: none;
+            cursor: pointer;
+            margin-top: auto;
+        }
+        .like-btn.liked {
+            background-image: url('Assets/like/like.png');
+        }
+
+        .input-post {
+            background-color: #333; /* Changed to match other types */
+            color: #fff;
+            padding: 20px;
+        }
+
+        .input-content {
+            font-size: 18px;
+            margin-top: 10px;
+            text-align: center;
+        }
+
+        input[type="text"] {
+            width: 80%;
+            padding: 10px;
+            margin-top: 10px;
+            border: 2px solid #fff;
+            border-radius: 5px;
+            background-color: transparent;
+            color: #fff;
+        }
+    </style>
+</head>
+<body>
+    <div class="header-nav">
+        <div class="logo">
+            <img src="Assets/ChloesBlog.png" alt="Chloe's Blog">
+        </div>
+        <nav>
+            <a href="about.html">About me</a>
+            <a href="https://www.youtube.com" target="_blank">Give a Buck</a>
+        </nav>
+    </div>
+
+    <div class="scrollable-content">
+        <div class="post-container" id="postContainer">
+        </div>
+    </div>
+
+    <script>
+        const posts = [
+            { id: 1, type: 'photo', src: 'Assets/posts/post1.jpg', xLength: 1, yLength: 1 },
+            { id: 2, type: 'post', src: 'Assets/posts/post2.jpg', description: 'Some description for post 2.', xLength: 1, yLength: 1 },
+            { id: 3, type: 'journal', title: 'Post Title 3', description: 'Some description for post 3.', xLength: 1, yLength: 1 },
+            { id: 4, type: 'input', question: 'apple', answer: '', answerLabel: '', xLength: 1, yLength: 1 }
+        ];
+
+        const postContainer = document.getElementById('postContainer');
+
+        posts.forEach(post => {
+            const postElement = document.createElement('div');
+            postElement.classList.add('post');
+            if (post.type === 'input') {
+                postElement.classList.add('input-post');
+            }
+            postElement.style.setProperty('--xLength', post.xLength);
+            postElement.style.setProperty('--yLength', post.yLength);
+
+            if (post.type === 'photo') {
+                const imageElement = document.createElement('img');
+                imageElement.src = post.src;
+                imageElement.alt = 'Post Image';
+                postElement.appendChild(imageElement);
+            } else if (post.type === 'post') {
+                const imageElement = document.createElement('img');
+                imageElement.src = post.src;
+                imageElement.alt = 'Post Image';
+                postElement.appendChild(imageElement);
+
+                const postContent = document.createElement('div');
+                postContent.classList.add('post-content');
+
+                const description = document.createElement('p');
+                description.textContent = post.description;
+
+                postContent.appendChild(description);
+                postElement.appendChild(postContent);
+            } else if (post.type === 'journal') {
+                const postContent = document.createElement('div');
+                postContent.classList.add('post-content');
+
+                const heading = document.createElement('h2');
+                heading.textContent = post.title;
+
+                const description = document.createElement('p');
+                description.textContent = post.description;
+
+                postContent.appendChild(heading);
+                postContent.appendChild(description);
+                postElement.appendChild(postContent);
+            } else if (post.type === 'input') {
+                const inputContent = document.createElement('div');
+                inputContent.classList.add('input-content');
+
+                const question = document.createElement('p');
+                question.textContent = post.question;
+
+                const answerInput = document.createElement('input');
+                answerInput.type = 'text';
+                answerInput.placeholder = post.answerLabel;
+
+                const answerLabel = document.createElement('p');
+                answerLabel.textContent = post.answer;
+
+                answerInput.addEventListener('input', function() {
+                    const question = post.question.toLowerCase();
+                    const answer = answerInput.value.trim().toLowerCase();
+                    let response = '';
+    
+                    if (question.includes('apple') && answer === '') {
+                        response = '';
+                    } else if (question.includes('apple') && answer === 'yes') {
+                        response = 'Good';
+                    } else {
+                        response = 'Bad';
+                    }
+                    answerLabel.textContent = response;
+                });
+
+                inputContent.appendChild(question);
+                inputContent.appendChild(answerInput);
+                inputContent.appendChild(answerLabel);
+                postElement.appendChild(inputContent);
+            }
+
+            const interaction = document.createElement('div');
+            interaction.classList.add('interaction');
+            if (post.type !== 'input') {
+                const likeButton = document.createElement('button');
+                likeButton.classList.add('like-btn');
+                likeButton.onclick = function() { toggleLike(this); };
+                interaction.appendChild(likeButton);
+            }
+            postElement.appendChild(interaction);
+
+            postContainer.appendChild(postElement);
+        });
+
+        function toggleLike(btn) {
+            btn.classList.toggle('liked');
+        }
+    </script>
+</body>
+</html>
