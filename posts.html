@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chloe's Posts</title>
+    <link rel="icon" type="image/png" href="Assets/smile.png">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #121212;
+            color: #fff;
+        }
+        .post-container {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+            padding: 20px;
+            overflow: auto; /* Make container scrollable */
+            max-height: calc(100vh - 40px); /* Adjust maximum height */
+        }
+        .post {
+            width: calc(33.33% - 20px);
+            margin: 10px;
+            background-color: #333;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 0 10px rgba(255, 255, 255, 0.1);
+        }
+        .post img {
+            width: 100%;
+            height: auto;
+            display: block;
+            border-radius: 10px 10px 0 0;
+        }
+        .post-content {
+            padding: 15px;
+        }
+        .post-content h2 {
+            margin-top: 0;
+            color: #fff;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .post-content p {
+            margin-bottom: 0;
+            color: #ccc;
+        }
+        .interaction {
+            padding: 10px;
+            background-color: #444;
+            text-align: center;
+        }
+        .like-btn {
+            width: 32px;
+            height: 32px;
+            background-repeat: no-repeat;
+            background-size: cover;
+            background-image: url('Assets/like/nolike.png');
+            background-color: transparent;
+            border: none;
+            cursor: pointer;
+        }
+        .like-btn.liked {
+            background-image: url('Assets/like/like.png');
+        }
+
+        /* Hide scrollbar */
+        .post-container::-webkit-scrollbar {
+            display: none;
+        }
+
+        @media (max-width: 1024px) {
+            .post {
+                width: calc(50% - 20px);
+            }
+        }
+
+        @media (max-width: 768px) {
+            .post {
+                width: calc(100% - 20px);
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="post-container" id="postContainer">
+        <!-- Posts will be dynamically added here -->
+    </div>
+
+    <script>
+        async function fetchData() {
+            const response = await fetch('txtFiles/data.txt'); // Change 'data.txt' to the path of your text file
+            const data = await response.text();
+            return data;
+        }
+
+        async function createPosts() {
+            const postData = await fetchData();
+            const posts = postData.split('\n\n').map(post => post.split('\n'));
+
+            const postContainer = document.getElementById('postContainer');
+
+            posts.forEach(postData => {
+                const title = postData[0];
+                const description = postData[1];
+                const imgSrc = `Assets/posts/${postData[2]}`;
+
+                const postElement = document.createElement('div');
+                postElement.classList.add('post');
+
+                const imageElement = document.createElement('img');
+                imageElement.src = imgSrc;
+                imageElement.alt = title;
+                postElement.appendChild(imageElement);
+
+                const postContent = document.createElement('div');
+                postContent.classList.add('post-content');
+
+                const heading = document.createElement('h2');
+                heading.textContent = title;
+
+                const likeButton = document.createElement('button');
+                likeButton.classList.add('like-btn');
+                likeButton.onclick = function() { toggleLike(this); };
+
+                const descriptionElement = document.createElement('p');
+                descriptionElement.textContent = description;
+
+                heading.appendChild(likeButton);
+                postContent.appendChild(heading);
+                postContent.appendChild(descriptionElement);
+                postElement.appendChild(postContent);
+
+                postContainer.appendChild(postElement);
+            });
+        }
+
+        function toggleLike(btn) {
+            btn.classList.toggle('liked');
+        }
+
+        createPosts();
+    </script>
+</body>
+</html>

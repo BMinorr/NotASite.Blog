@@ -3,17 +3,21 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>My Blog</title>
+    <title>Chloe's Blog</title>
+    <link rel="icon" type="image/png" href="Assets/smile.png">
     <style>
         body {
             font-family: Arial, sans-serif;
             margin: 0;
             padding: 0;
-            background-color: #121212;
+            background-image: url("Assets/background.png");
+            background-size: cover;
+            background-repeat: no-repeat;
+            background-attachment: fixed;
             color: #fff;
         }
         .header-nav {
-            background-color: #333;
+            background-color: rgba(50, 50, 50, 0.7); /* Transparent gray */
             padding: 10px 20px;
             display: flex;
             align-items: center;
@@ -37,18 +41,30 @@
         nav a:hover {
             background-color: #666;
         }
-        .container {
-            width: 80%;
-            margin: 20px auto;
-            text-align: center;
-        }
-        .post {
-            border-bottom: 1px solid #666;
-            padding: 20px 0;
-        }
         .logo img {
             width: 238px;
             height: 48px;
+        }
+        .input-container {
+            margin-top: 20px;
+            text-align: center;
+        }
+        input[type="text"] {
+            padding: 10px;
+            width: 300px;
+            border: 2px solid #333;
+            border-radius: 5px;
+        }
+        input[type="submit"] {
+            padding: 10px 20px;
+            background-color: #333;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        input[type="submit"]:hover {
+            background-color: #666;
         }
     </style>
 </head>
@@ -60,21 +76,29 @@
         <nav>
             <a href="about.html">About me</a>
             <a href="posts.html">Posts</a>
+            <a href="https://www.youtube.com" target="_blank">Give a Buck</a>
         </nav>
     </div>
-    <div class="container">
-        <div class="post">
-            <h2>Post Title 1</h2>
-            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis dapibus nunc sit amet felis ultricies dapibus.</p>
-        </div>
-        <div class="post">
-            <h2>Post Title 2</h2>
-            <p>Nulla facilisi. Phasellus ut tempor tortor, nec lacinia velit. Proin volutpat elit et diam eleifend, in luctus sem dapibus.</p>
-        </div>
-        <div class="post">
-            <h2>Post Title 3</h2>
-            <p>Quisque at ex eget nisl eleifend tincidunt ut et augue. Integer dapibus nulla ut risus aliquam, eget laoreet libero gravida.</p>
-        </div>
+    <div class="input-container">
+        <form onsubmit="handleInput(event)" novalidate>
+            <label for="desire">What do you desire?</label>
+            <br>
+            <input type="text" id="desire" name="desire" required autocomplete="off">
+            <br>
+            <input type="submit" value="Submit">
+        </form>
     </div>
+
+    <script>
+        function handleInput(event) {
+            event.preventDefault();
+            const inputText = document.getElementById("desire").value;
+            if (inputText.toLowerCase() === "sara's corpse") {
+                window.location.href = "1996.html";
+            } else {
+                alert("No. You do not truly desire this.");
+            }
+        }
+    </script>
 </body>
 </html>
